@@ -1,24 +1,67 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, FlatList} from 'react-native';
-import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
+import { useRouter } from "expo-router";
+import React from "react";
+import {
+  FlatList,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+
 const MODULES = [
-  { id: '1', title: 'Metric Converter', icon: '📏', color: '#4EA8DE' },
-  { id: '2', title: 'Currency Exchange', icon: '💰', color: '#48BFE3' },
-  { id: '3', title: 'Temperature Converter', icon: '🌡️', color: '#56CFE1' },
-  { id: '4', title: 'Weight Wizard', icon: '⚖️', color: '#64DFDF' },
+  {
+    id: "1",
+    title: "Quick Swap",
+    path: "/swapconverterscreen",
+    icon: "🔄",
+    color: "#8338EC",
+  },
+
+  {
+    id: "2",
+    title: "Distance Converter",
+    path: "/converter",
+    icon: "📏",
+    color: "#4EA8DE",
+  },
+  {
+    id: "3",
+    title: "Currency Exchange",
+    path: "/currency",
+    icon: "💰",
+    color: "#48BFE3",
+  },
+  {
+    id: "4",
+    title: "Temperature Converter",
+    path: "/temp",
+    icon: "🌡️",
+    color: "#56CFE1",
+  },
 ];
 
 const HomeScreen = () => {
-  const renderItem = ({ item }: { item: typeof MODULES[0] }) => (
-    <TouchableOpacity 
-      activeOpacity={0.7}
-      style={[styles.card, { borderLeftColor: item.color }]}
+  const router = useRouter();
+
+  const renderItem = ({ item }: { item: (typeof MODULES)[0] }) => (
+    <TouchableOpacity
+      activeOpacity={0.8}
+      style={styles.card}
+      onPress={() => router.push(item.path as any)}
     >
-      <Text style={styles.icon}>{item.icon}</Text>
-      <View>
-        <Text style={styles.cardTitle}>{item.title}</Text>
-        <Text style={styles.cardSubtitle}>Tap to open tool</Text>
+      <View
+        style={[styles.iconContainer, { backgroundColor: item.color + "20" }]}
+      >
+        <Text style={styles.iconEmoji}>{item.icon}</Text>
       </View>
+
+      <View style={styles.textContainer}>
+        <Text style={styles.cardTitle}>{item.title}</Text>
+      </View>
+
+      <Text style={styles.arrow}>〉</Text>
     </TouchableOpacity>
   );
 
@@ -29,8 +72,9 @@ const HomeScreen = () => {
         <FlatList
           data={MODULES}
           renderItem={renderItem}
-          keyExtractor={item => item.id}
+          keyExtractor={(item) => item.id}
           contentContainerStyle={styles.list}
+          showsVerticalScrollIndicator={false}
         />
       </View>
     </SafeAreaView>
@@ -40,50 +84,73 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8F9FA',
+    backgroundColor: "#F0F4F8", //
   },
   innerContainer: {
-    padding: 20,
-    paddingTop: 40,
+    paddingHorizontal: 20,
+    paddingTop: 20,
   },
   header: {
-    fontSize: 28,
-    fontWeight: '800',
-    color: '#212529',
-    marginBottom: 30,
+    fontSize: 32,
+    fontWeight: "900",
+    color: "#1A202C",
+    marginBottom: 25,
+    letterSpacing: -0.5,
   },
   list: {
-    gap: 15,
+    paddingBottom: 20,
   },
   card: {
-    backgroundColor: '#FFF',
-    padding: 20,
-    borderRadius: 12,
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderLeftWidth: 6,
-    marginBottom: 15,
-    // Android Shadow
-    elevation: 4,
-    // iOS Shadow
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
+    backgroundColor: "#FFF",
+    padding: 16,
+    borderRadius: 20,
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 16,
+    // Modern Soft Shadow
+    ...Platform.select({
+      ios: {
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.05,
+        shadowRadius: 10,
+      },
+      android: {
+        elevation: 3,
+      },
+    }),
   },
-  icon: {
-    fontSize: 32,
-    marginRight: 15,
+  iconContainer: {
+    width: 55,
+    height: 55,
+    borderRadius: 18,
+    justifyContent: "center",
+    alignItems: "center",
+    marginRight: 16,
+  },
+  iconEmoji: {
+    fontSize: 26,
+  },
+  textContainer: {
+    flex: 1,
   },
   cardTitle: {
     fontSize: 18,
-    fontWeight: '700',
-    color: '#343A40',
+    fontWeight: "700",
+    color: "#2D3748",
   },
   cardSubtitle: {
-    fontSize: 13,
-    color: '#6C757D',
+    fontSize: 12,
+    color: "#718096",
+    fontWeight: "500",
+    letterSpacing: 1,
     marginTop: 2,
+  },
+  arrow: {
+    fontSize: 18,
+    color: "#CBD5E0",
+    fontWeight: "bold",
+    marginLeft: 10,
   },
 });
 

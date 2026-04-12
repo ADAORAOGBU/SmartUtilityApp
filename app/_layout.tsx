@@ -1,60 +1,64 @@
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
+import { LinearGradient } from "expo-linear-gradient";
+import { Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import React from "react";
 
 export default function RootLayout() {
   return (
     <>
+      <StatusBar style="light" />
       <Stack
         screenOptions={{
           headerStyle: {
-            backgroundColor: '#4EA8DE', // Matching your toolkit theme
+            backgroundColor: "#2f6586",
           },
-          headerTintColor: '#fff', // White text for the header
+          headerBackground: () => (
+            <LinearGradient
+              colors={["#4EA8DE", "#3A86FF"]}
+              style={{ flex: 1 }}
+            />
+          ),
+          headerTintColor: "#fff",
           headerTitleStyle: {
-            fontWeight: 'bold',
+            fontWeight: "600",
+            fontSize: 18,
           },
+          headerBackVisible: true,
         }}
       >
-        
-        <Stack.Screen 
-          name="index" 
-          options={{ 
-            title: 'Smart Converter',
-            headerShown: false,  headerLargeTitle: true// Keeps the home screen clean
-          }} 
+        <Stack.Screen
+          name="index"
+          options={{ headerShown: false, title: "SMART TOOLKIT" }}
         />
 
-                <Stack.Screen 
-          name="converter" 
-          options={{ 
-            title: 'Metric Converter',
-            headerBackTitle: 'Home', 
-          }} 
+        {/* The Swap Screen */}
+        <Stack.Screen
+          name="swapconverterscreen"
+          options={{
+            headerShown: true,
+            title: "QUICK SWAP",
+            statusBarStyle: "dark",
+          }}
         />
-
-              <Stack.Screen 
-          name="currency" 
-          options={{ 
-            title: 'Currency Exchange',
-            headerBackTitle: 'Home',
-          }} 
+        <Stack.Screen
+          name="converter"
+          options={{
+            title: "Distance Converter",
+          }}
         />
-              <Stack.Screen 
-          name="temp" 
-          options={{ 
-            title: 'Temperature Converter',
-            headerBackTitle: 'Home',
-          }} 
-        />  
-        <Stack.Screen 
-          name="weight" 
-          options={{ 
-            title: 'Weight Wizard',
-            headerBackTitle: 'Home', headerTintColor: '#fff',
-          }} 
-        />  
+        <Stack.Screen
+          name="temp"
+          options={{
+            title: "Temperature Converter",
+          }}
+        />
+        <Stack.Screen
+          name="currency"
+          options={{
+            title: "Currency Exchange",
+          }}
+        />
       </Stack>
-      <StatusBar style="auto" />
     </>
   );
 }
