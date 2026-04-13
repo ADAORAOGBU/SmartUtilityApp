@@ -16,7 +16,6 @@
         "foregroundImage": "./assets/images/splash-icon.png"
       },
       "package": "com.yourcompany.smartutilityapp",
-
       "predictiveBackGestureEnabled": false
     },
     "web": {
@@ -41,6 +40,12 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "b9c11b2a-d53a-4135-922f-0bf3aee11a20"
+      }
     }
   }
 }

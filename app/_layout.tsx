@@ -24,6 +24,10 @@ export default function RootLayout() {
             fontSize: 18,
           },
           headerBackVisible: true,
+
+          contentStyle: {
+            backgroundColor: "#F8F9FA",
+          },
         }}
       >
         <Stack.Screen
