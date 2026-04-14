@@ -1,7 +1,9 @@
+import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import React from "react";
 import {
   FlatList,
+  Image,
   Platform,
   StyleSheet,
   Text,
@@ -17,14 +19,15 @@ const MODULES = [
     path: "/swapconverterscreen",
     icon: "🔄",
     color: "#8338EC",
+    isImage: false,
   },
-
   {
     id: "2",
     title: "Distance Converter",
     path: "/converter",
     icon: "📏",
     color: "#4EA8DE",
+    isImage: false,
   },
   {
     id: "3",
@@ -32,6 +35,7 @@ const MODULES = [
     path: "/currency",
     icon: "💰",
     color: "#48BFE3",
+    isImage: false,
   },
   {
     id: "4",
@@ -39,6 +43,15 @@ const MODULES = [
     path: "/temp",
     icon: "🌡️",
     color: "#56CFE1",
+    isImage: false,
+  },
+  {
+    id: "5",
+    title: "Task Manager",
+    path: "/tasks",
+    icon: require("../../assets/images/task-icon.png"),
+    color: "#56CFE1",
+    isImage: true,
   },
 ];
 
@@ -54,14 +67,25 @@ const HomeScreen = () => {
       <View
         style={[styles.iconContainer, { backgroundColor: item.color + "20" }]}
       >
-        <Text style={styles.iconEmoji}>{item.icon}</Text>
+        {item.isImage ? (
+          <Image
+            source={item.icon}
+            style={styles.imageIcon}
+            resizeMode="contain"
+          />
+        ) : (
+          <Text style={styles.iconEmoji}>{item.icon}</Text>
+        )}
       </View>
 
       <View style={styles.textContainer}>
         <Text style={styles.cardTitle}>{item.title}</Text>
+        {item.id === "5" && (
+          <Text style={styles.cardSubtitle}>Your digital to-do companion</Text>
+        )}
       </View>
 
-      <Text style={styles.arrow}>〉</Text>
+      <Ionicons name="chevron-forward" size={20} color="#CBD5E1" />
     </TouchableOpacity>
   );
 
@@ -82,14 +106,8 @@ const HomeScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#F0F4F8", //
-  },
-  innerContainer: {
-    paddingHorizontal: 20,
-    paddingTop: 20,
-  },
+  container: { flex: 1, backgroundColor: "#F0F4F8" },
+  innerContainer: { paddingHorizontal: 20, paddingTop: 20 },
   header: {
     fontSize: 32,
     fontWeight: "900",
@@ -97,9 +115,7 @@ const styles = StyleSheet.create({
     marginBottom: 25,
     letterSpacing: -0.5,
   },
-  list: {
-    paddingBottom: 20,
-  },
+  list: { paddingBottom: 20 },
   card: {
     backgroundColor: "#FFF",
     padding: 16,
@@ -107,7 +123,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 16,
-    // Modern Soft Shadow
     ...Platform.select({
       ios: {
         shadowColor: "#000",
@@ -115,9 +130,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.05,
         shadowRadius: 10,
       },
-      android: {
-        elevation: 3,
-      },
+      android: { elevation: 3 },
     }),
   },
   iconContainer: {
@@ -128,30 +141,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginRight: 16,
   },
-  iconEmoji: {
-    fontSize: 26,
-  },
-  textContainer: {
-    flex: 1,
-  },
-  cardTitle: {
-    fontSize: 18,
-    fontWeight: "700",
-    color: "#2D3748",
-  },
-  cardSubtitle: {
-    fontSize: 12,
-    color: "#718096",
-    fontWeight: "500",
-    letterSpacing: 1,
-    marginTop: 2,
-  },
-  arrow: {
-    fontSize: 18,
-    color: "#CBD5E0",
-    fontWeight: "bold",
-    marginLeft: 10,
-  },
+  iconEmoji: { fontSize: 26 },
+  imageIcon: { width: 35, height: 35 },
+  textContainer: { flex: 1 },
+  cardTitle: { fontSize: 18, fontWeight: "700", color: "#2D3748" },
+  cardSubtitle: { fontSize: 12, color: "#94A3B8", marginTop: 2 },
 });
 
 export default HomeScreen;

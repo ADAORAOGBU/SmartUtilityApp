@@ -62,6 +62,7 @@ export default function RootLayout() {
             title: "Currency Exchange",
           }}
         />
+        <Stack.Screen name="tasks" options={{ title: "Task Manager" }} />
       </Stack>
     </>
   );
