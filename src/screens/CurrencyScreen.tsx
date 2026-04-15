@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { BrandedHeader } from "../components/brandedheader";
 import { FALLBACK_RATES, convertCurrency } from "../utils/currencylogic";
-
 export default function CurrencyScreen() {
   const [amount, setAmount] = useState("");
   const [baseCurrency, setBaseCurrency] = useState("USD");
 
   return (
     <SafeAreaView style={styles.container}>
+      <BrandedHeader title="Currency" subtitle="Global Exchange Rates" />
       <View style={styles.headerContainer}>
         <Text style={styles.title}>Currency Exchange</Text>
         <Text style={styles.subtitle}>Base: {baseCurrency}</Text>

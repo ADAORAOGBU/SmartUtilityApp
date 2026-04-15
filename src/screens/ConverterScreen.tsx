@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { BrandedHeader } from "../components/brandedheader";
 import { convertLength, LengthUnit, lengthUnits } from "../utils/conversion";
 
 export default function ConverterScreen() {
@@ -8,7 +9,8 @@ export default function ConverterScreen() {
   const [fromUnit, setFromUnit] = useState<LengthUnit>("meters");
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#F8F9FA" }}>
+      <BrandedHeader title="Distance" subtitle="Meters, Miles, & more" />
       <ScrollView contentContainerStyle={styles.content}>
         <Text style={styles.label}>Amount to Convert</Text>
         <TextInput
@@ -45,8 +47,8 @@ const styles = StyleSheet.create({
     padding: 20,
     flex: 1,
     paddingTop: 10,
-    paddingHorizontal: 20,
-    marginTop: 80,
+    paddingHorizontal: 30,
+    marginTop: 50,
   },
   label: { fontSize: 16, color: "#666", marginBottom: 8 },
   input: {
@@ -60,7 +62,7 @@ const styles = StyleSheet.create({
   },
   resultsHeader: { fontSize: 18, fontWeight: "bold", marginBottom: 15 },
   resultRow: {
-    flexDirection: "row",
+    flexDirection: "column",
     justifyContent: "space-between",
     paddingVertical: 15,
     borderBottomWidth: 1,

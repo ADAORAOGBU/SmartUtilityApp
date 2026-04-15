@@ -1,20 +1,24 @@
+import styles from "@/styles/taskmanagerstyles";
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
   FlatList,
-  StyleSheet,
+  Image,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { BrandedHeader } from "../components/brandedheader";
 import { TaskItem } from "../components/taskitem";
 
 export default function TaskManagerScreen() {
   const [tasks, setTasks] = useState<any[]>([]);
   const [newTask, setNewTask] = useState("");
+  const router = useRouter();
 
   useEffect(() => {
     (async () => {
@@ -36,16 +40,49 @@ export default function TaskManagerScreen() {
     setNewTask("");
   };
 
+  const renderEmptyState = () => (
+    <View style={styles.emptyContainer}>
+      <View style={styles.illustrationWrapper}>
+        <View style={styles.glowCircle} />
+        <Image
+          source={require("../../assets/images/task-icon.png")}
+          style={styles.emptyImage}
+          resizeMode="contain"
+        />
+      </View>
+
+      <Text style={styles.emptyTitle}>You're All Set!</Text>
+      <Text style={styles.emptySubtitle}>
+        Your list is empty.{"\n"}Add your first goal of the day above!
+      </Text>
+
+      <Ionicons
+        name="arrow-up"
+        size={24}
+        color="#8338EC"
+        style={{ marginTop: 25, opacity: 0.5 }}
+      />
+    </View>
+  );
+
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}>Tasks</Text>
-      </View>
+      <BrandedHeader
+        title="Today's Focus"
+        subtitle={
+          tasks.length === 0
+            ? "Let's get things done!"
+            : tasks.every((t) => t.completed)
+              ? "All caught up! 🎉"
+              : `${tasks.filter((t) => !t.completed).length} goals remaining`
+        }
+      />
 
       <View style={styles.inputRow}>
         <TextInput
           style={styles.input}
           placeholder="New task..."
+          placeholderTextColor="#94A3B8"
           value={newTask}
           onChangeText={setNewTask}
         />
@@ -72,31 +109,8 @@ export default function TaskManagerScreen() {
             onDelete={() => setTasks(tasks.filter((t) => t.id !== item.id))}
           />
         )}
+        ListEmptyComponent={renderEmptyState()}
       />
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#F8F9FA" },
-  header: { padding: 20 },
-  title: { fontSize: 28, fontWeight: "900", color: "#1E293B" },
-  inputRow: { flexDirection: "row", paddingHorizontal: 20, marginBottom: 10 },
-  input: {
-    flex: 1,
-    backgroundColor: "#fff",
-    borderRadius: 12,
-    padding: 12,
-    marginRight: 10,
-    borderWidth: 1,
-    borderColor: "#E2E8F0",
-  },
-  addBtn: {
-    backgroundColor: "#8338EC",
-    width: 50,
-    height: 50,
-    borderRadius: 12,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});

@@ -39,7 +39,7 @@ export default function RootLayout() {
         <Stack.Screen
           name="swapconverterscreen"
           options={{
-            headerShown: true,
+            headerShown: false,
             title: "QUICK SWAP",
             statusBarStyle: "dark",
           }}
@@ -48,21 +48,27 @@ export default function RootLayout() {
           name="converter"
           options={{
             title: "Distance Converter",
+            headerShown: false,
           }}
         />
         <Stack.Screen
           name="temp"
           options={{
             title: "Temperature Converter",
+            headerShown: false,
           }}
         />
         <Stack.Screen
           name="currency"
           options={{
             title: "Currency Exchange",
+            headerShown: false,
           }}
         />
-        <Stack.Screen name="tasks" options={{ title: "Task Manager" }} />
+        <Stack.Screen
+          name="tasks"
+          options={{ title: "Task Manager", headerShown: false }}
+        />
       </Stack>
     </>
   );

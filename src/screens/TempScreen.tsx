@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { BrandedHeader } from "../components/brandedheader";
 import { convertTemperature } from "../utils/conversion";
 
 export default function TempScreen() {
@@ -17,6 +18,7 @@ export default function TempScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <BrandedHeader title="Climate" subtitle="Celsius, Fahrenheit & Kelvin" />
       <View style={styles.inputCard}>
         <Text style={styles.label}>Celsius Input (°C)</Text>
         <TextInput
